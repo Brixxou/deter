@@ -1,15 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "sveltekit",
-  "regions": ["cdg1"],
-  "build": {
-    "env": {
-      "PUBLIC_SUPABASE_URL": "@public_supabase_url",
-      "PUBLIC_SUPABASE_ANON_KEY": "@public_supabase_anon_key",
-      "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
-      "STRAVA_CLIENT_ID": "@strava_client_id",
-      "STRAVA_CLIENT_SECRET": "@strava_client_secret"
-    }
-  },
-  "crons": []
+  "regions": ["cdg1"]
 }
