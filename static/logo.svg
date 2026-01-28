@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <!-- Gradient principal violet -->
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#667eea"/>
+      <stop offset="100%" stop-color="#764ba2"/>
+    </linearGradient>
+    
+    <!-- Gradient accent orange/rose -->
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background circle with glass effect -->
+  <circle cx="256" cy="256" r="240" fill="url(#primaryGradient)" opacity="0.15"/>
+  <circle cx="256" cy="256" r="240" stroke="url(#primaryGradient)" stroke-width="3" fill="none" opacity="0.5"/>
+  
+  <!-- Inner hexagon shape representing determination -->
+  <path 
+    d="M256 60 L420 150 L420 330 L256 420 L92 330 L92 150 Z" 
+    fill="url(#primaryGradient)" 
+    opacity="0.3"
+  />
+  
+  <!-- Main "D" letter stylized as a power/strength symbol -->
+  <g filter="url(#glow)">
+    <!-- Bold D shape -->
+    <path 
+      d="M160 140 L160 372 L260 372 C340 372 400 310 400 256 C400 202 340 140 260 140 L160 140 Z
+         M210 190 L260 190 C305 190 345 218 345 256 C345 294 305 322 260 322 L210 322 L210 190 Z" 
+      fill="url(#primaryGradient)"
+    />
+    
+    <!-- Lightning bolt accent inside the D -->
+    <path 
+      d="M270 200 L240 255 L275 255 L250 315 L310 245 L275 245 L300 200 Z" 
+      fill="url(#accentGradient)"
+    />
+  </g>
+  
+  <!-- Dynamic motion lines -->
+  <g opacity="0.6">
+    <path d="M100 200 L70 200" stroke="url(#accentGradient)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M100 256 L55 256" stroke="url(#accentGradient)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M100 312 L70 312" stroke="url(#accentGradient)" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>

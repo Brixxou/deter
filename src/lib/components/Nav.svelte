@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { fly, fade } from 'svelte/transition';
 	import { Activity, Calendar, Users, Trophy, Settings, LogOut, Menu, X } from 'lucide-svelte';
+	import Logo from './Logo.svelte';
 	
 	let mobileMenuOpen = $state(false);
 	
@@ -25,13 +26,8 @@
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex items-center justify-between h-16">
 			<!-- Logo -->
-			<a href="/" class="flex items-center gap-3 group">
-				<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-start to-primary-end flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
-					<Activity class="w-5 h-5 text-white" />
-				</div>
-				<span class="text-xl font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-					DETER
-				</span>
+			<a href="/" class="group">
+				<Logo size="md" />
 			</a>
 			
 			<!-- Desktop Navigation -->

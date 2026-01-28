@@ -39,6 +39,48 @@ create policy "Les utilisateurs peuvent créer leur profil"
   with check (auth.uid() = id);
 
 -- ============================================
+-- Table: friendships (AVANT activities et manual_workouts)
+-- Relations d'amitié entre utilisateurs
+-- ============================================
+create table public.friendships (
+  id uuid default uuid_generate_v4() primary key,
+  user_id uuid references public.profiles(id) on delete cascade not null,
+  friend_id uuid references public.profiles(id) on delete cascade not null,
+  status text default 'pending' check (status in ('pending', 'accepted', 'rejected')),
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  
+  -- Contrainte pour éviter les doublons
+  unique(user_id, friend_id),
+  -- Contrainte pour éviter de s'ajouter soi-même
+  check (user_id != friend_id)
+);
+
+-- Index
+create index friendships_user_id_idx on public.friendships (user_id);
+create index friendships_friend_id_idx on public.friendships (friend_id);
+create index friendships_status_idx on public.friendships (status);
+
+-- RLS
+alter table public.friendships enable row level security;
+
+create policy "Les utilisateurs peuvent voir leurs demandes d'amitié"
+  on public.friendships for select
+  using (auth.uid() = user_id or auth.uid() = friend_id);
+
+create policy "Les utilisateurs peuvent envoyer des demandes d'amitié"
+  on public.friendships for insert
+  with check (auth.uid() = user_id);
+
+create policy "Les utilisateurs peuvent répondre aux demandes reçues"
+  on public.friendships for update
+  using (auth.uid() = friend_id);
+
+create policy "Les utilisateurs peuvent supprimer leurs amitiés"
+  on public.friendships for delete
+  using (auth.uid() = user_id or auth.uid() = friend_id);
+
+-- ============================================
 -- Table: strava_connections
 -- Connexions OAuth Strava
 -- ============================================
@@ -121,8 +163,8 @@ create policy "Les activités sont visibles par les amis"
     or exists (
       select 1 from public.friendships 
       where status = 'accepted' 
-      and ((user_id = auth.uid() and friend_id = activities.user_id)
-        or (friend_id = auth.uid() and user_id = activities.user_id))
+      and ((friendships.user_id = auth.uid() and friendships.friend_id = activities.user_id)
+        or (friendships.friend_id = auth.uid() and friendships.user_id = activities.user_id))
     )
   );
 
@@ -170,8 +212,8 @@ create policy "Les workouts sont visibles par les amis"
     or exists (
       select 1 from public.friendships 
       where status = 'accepted' 
-      and ((user_id = auth.uid() and friend_id = manual_workouts.user_id)
-        or (friend_id = auth.uid() and user_id = manual_workouts.user_id))
+      and ((friendships.user_id = auth.uid() and friendships.friend_id = manual_workouts.user_id)
+        or (friendships.friend_id = auth.uid() and friendships.user_id = manual_workouts.user_id))
     )
   );
 
@@ -186,48 +228,6 @@ create policy "Les utilisateurs peuvent modifier leurs workouts"
 create policy "Les utilisateurs peuvent supprimer leurs workouts"
   on public.manual_workouts for delete
   using (auth.uid() = user_id);
-
--- ============================================
--- Table: friendships
--- Relations d'amitié entre utilisateurs
--- ============================================
-create table public.friendships (
-  id uuid default uuid_generate_v4() primary key,
-  user_id uuid references public.profiles(id) on delete cascade not null,
-  friend_id uuid references public.profiles(id) on delete cascade not null,
-  status text default 'pending' check (status in ('pending', 'accepted', 'rejected')),
-  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
-  updated_at timestamp with time zone default timezone('utc'::text, now()) not null,
-  
-  -- Contrainte pour éviter les doublons
-  unique(user_id, friend_id),
-  -- Contrainte pour éviter de s'ajouter soi-même
-  check (user_id != friend_id)
-);
-
--- Index
-create index friendships_user_id_idx on public.friendships (user_id);
-create index friendships_friend_id_idx on public.friendships (friend_id);
-create index friendships_status_idx on public.friendships (status);
-
--- RLS
-alter table public.friendships enable row level security;
-
-create policy "Les utilisateurs peuvent voir leurs demandes d'amitié"
-  on public.friendships for select
-  using (auth.uid() = user_id or auth.uid() = friend_id);
-
-create policy "Les utilisateurs peuvent envoyer des demandes d'amitié"
-  on public.friendships for insert
-  with check (auth.uid() = user_id);
-
-create policy "Les utilisateurs peuvent répondre aux demandes reçues"
-  on public.friendships for update
-  using (auth.uid() = friend_id);
-
-create policy "Les utilisateurs peuvent supprimer leurs amitiés"
-  on public.friendships for delete
-  using (auth.uid() = user_id or auth.uid() = friend_id);
 
 -- ============================================
 -- Fonction: Créer un profil automatiquement

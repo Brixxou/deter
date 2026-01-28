@@ -4,7 +4,8 @@
 	import GlassButton from '$lib/components/GlassButton.svelte';
 	import GlassCard from '$lib/components/GlassCard.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
-	import { Activity, Users, Trophy, Zap, ChevronRight, Bike, Dumbbell, Timer } from 'lucide-svelte';
+	import Logo from '$lib/components/Logo.svelte';
+	import { Activity, Users, Trophy, Zap, ChevronRight, Bike, Dumbbell, Timer, ArrowRight, Sparkles } from 'lucide-svelte';
 	
 	// Fake demo users for the landing page
 	const demoUsers = [
@@ -250,22 +251,54 @@
 <section class="py-24 px-4">
 	<div class="max-w-4xl mx-auto">
 		<GlassCard variant="strong">
-			<div class="p-12 text-center">
-				<Zap class="w-12 h-12 mx-auto mb-6 text-yellow-400" />
-				<h2 class="text-3xl md:text-4xl font-bold mb-4">
-					<span class="bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-						Prêt à te dépasser ?
-					</span>
-				</h2>
-				<p class="text-white/60 mb-8 max-w-xl mx-auto">
-					Rejoins la communauté DETER et commence à tracker tes séances avec tes amis dès aujourd'hui.
-				</p>
-				<a href="/auth/register">
-					<GlassButton variant="primary" size="lg">
-						Commencer gratuitement
-						<ChevronRight class="w-5 h-5" />
-					</GlassButton>
-				</a>
+			<div class="p-12 text-center relative overflow-hidden">
+				<!-- Background decoration -->
+				<div class="absolute inset-0 overflow-hidden">
+					<div class="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br from-primary-start/20 to-primary-end/20 rounded-full blur-3xl"></div>
+					<div class="absolute -bottom-24 -left-24 w-48 h-48 bg-gradient-to-br from-accent-orange/20 to-accent-pink/20 rounded-full blur-3xl"></div>
+				</div>
+				
+				<div class="relative z-10">
+					<!-- Logo icon -->
+					<div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-start to-primary-end mb-8 shadow-2xl shadow-primary-start/30">
+						<Zap class="w-10 h-10 text-white" />
+					</div>
+					
+					<h2 class="text-3xl md:text-5xl font-black mb-4">
+						<span class="bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent">
+							Prêt à te dépasser ?
+						</span>
+					</h2>
+					<p class="text-white/60 mb-10 max-w-xl mx-auto text-lg">
+						Rejoins la communauté DETER et commence à tracker tes séances avec tes amis dès aujourd'hui.
+					</p>
+					
+					<!-- Enhanced CTA button -->
+					<a 
+						href="/auth/register"
+						class="group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-lg overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-primary-start/40"
+					>
+						<!-- Gradient background -->
+						<div class="absolute inset-0 bg-gradient-to-r from-primary-start via-primary-end to-accent-pink"></div>
+						
+						<!-- Animated shine -->
+						<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+						
+						<!-- Glow border -->
+						<div class="absolute inset-0 rounded-2xl border border-white/20"></div>
+						
+						<!-- Button content -->
+						<span class="relative z-10 flex items-center gap-3 text-white">
+							<Sparkles class="w-5 h-5" />
+							Commencer gratuitement
+							<ArrowRight class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+						</span>
+					</a>
+					
+					<p class="mt-6 text-sm text-white/40">
+						Gratuit pour toujours • Aucune carte requise
+					</p>
+				</div>
 			</div>
 		</GlassCard>
 	</div>
@@ -275,12 +308,7 @@
 <footer class="py-12 px-4 border-t border-white/5">
 	<div class="max-w-6xl mx-auto">
 		<div class="flex flex-col md:flex-row items-center justify-between gap-4">
-			<div class="flex items-center gap-3">
-				<div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-start to-primary-end flex items-center justify-center">
-					<Activity class="w-4 h-4 text-white" />
-				</div>
-				<span class="font-bold">DETER</span>
-			</div>
+			<Logo size="sm" />
 			
 			<p class="text-sm text-white/40">
 				© 2026 DETER. Fait avec 💪 pour les sportifs.

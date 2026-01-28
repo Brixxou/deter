@@ -183,35 +183,36 @@
 							<!-- Activity icon -->
 							<div class="w-12 h-12 rounded-2xl bg-gradient-to-br {activityColors[activity.type]} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
 								<ActivityIcon class="w-6 h-6 text-white" />
-								
-								<!-- Activity info -->
-								<div class="flex-1 min-w-0">
-									<h3 class="font-medium truncate group-hover:text-primary-start transition-colors">
-										{activity.name}
-									</h3>
-									<p class="text-sm text-white/50">{activity.date}</p>
-								</div>
-								
-								<!-- Stats -->
-								<div class="hidden sm:flex items-center gap-6 text-sm">
-									{#if activity.distance}
-										<div class="text-center">
-											<p class="font-semibold">{activity.distance}</p>
-											<p class="text-white/40 text-xs">Distance</p>
-										</div>
-									{/if}
-									<div class="text-center">
-										<p class="font-semibold">{activity.duration}</p>
-										<p class="text-white/40 text-xs">Durée</p>
-									</div>
-									<div class="text-center">
-										<p class="font-semibold text-orange-400">{activity.calories}</p>
-										<p class="text-white/40 text-xs">kcal</p>
-									</div>
-								</div>
-								
-								<ChevronRight class="w-5 h-5 text-white/30 group-hover:text-white/60 group-hover:translate-x-1 transition-all" />
 							</div>
+							
+							<!-- Activity info -->
+							<div class="flex-1 min-w-0">
+								<h3 class="font-medium truncate group-hover:text-primary-start transition-colors">
+									{activity.name}
+								</h3>
+								<p class="text-sm text-white/50">{activity.date}</p>
+							</div>
+							
+							<!-- Stats -->
+							<div class="hidden sm:flex items-center gap-6 text-sm">
+								{#if activity.distance}
+									<div class="text-center">
+										<p class="font-semibold">{activity.distance}</p>
+										<p class="text-white/40 text-xs">Distance</p>
+									</div>
+								{/if}
+								<div class="text-center">
+									<p class="font-semibold">{activity.duration}</p>
+									<p class="text-white/40 text-xs">Durée</p>
+								</div>
+								<div class="text-center">
+									<p class="font-semibold text-orange-400">{activity.calories}</p>
+									<p class="text-white/40 text-xs">kcal</p>
+								</div>
+							</div>
+							
+							<ChevronRight class="w-5 h-5 text-white/30 group-hover:text-white/60 group-hover:translate-x-1 transition-all" />
+						</div>
 						{/each}
 					</div>
 				</div>

@@ -5,7 +5,8 @@
 	import GlassCard from '$lib/components/GlassCard.svelte';
 	import GlassButton from '$lib/components/GlassButton.svelte';
 	import GlassInput from '$lib/components/GlassInput.svelte';
-	import { Activity, Mail, Lock, User, ArrowLeft, Check } from 'lucide-svelte';
+	import Logo from '$lib/components/Logo.svelte';
+	import { Mail, Lock, User, ArrowLeft, Check } from 'lucide-svelte';
 	
 	let name = $state('');
 	let email = $state('');
@@ -61,16 +62,11 @@
 		
 		<!-- Logo -->
 		<div 
-			class="flex items-center gap-3 mb-8"
+			class="mb-8"
 			in:fly={{ y: 20, duration: 400, delay: 100, easing: cubicOut }}
 		>
-			<div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-start to-primary-end flex items-center justify-center shadow-lg">
-				<Activity class="w-6 h-6 text-white" />
-			</div>
-			<div>
-				<h1 class="text-2xl font-bold">DETER</h1>
-				<p class="text-sm text-white/50">Créer un compte</p>
-			</div>
+			<Logo size="lg" />
+			<p class="text-sm text-white/50 mt-2 ml-1">Créer un compte</p>
 		</div>
 		
 		<!-- Registration form -->
@@ -158,22 +154,21 @@
 				</GlassButton>
 				
 				<!-- Divider -->
-				<div class="relative">
-					<div class="absolute inset-0 flex items-center">
-						<div class="w-full border-t border-white/10"></div>
-					</div>
-					<div class="relative flex justify-center text-sm">
-						<span class="px-4 bg-transparent text-white/40">ou s'inscrire avec</span>
-					</div>
+				<div class="flex items-center gap-4">
+					<div class="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+					<span class="text-sm text-white/40">ou</span>
+					<div class="flex-1 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 				</div>
 				
 				<!-- Strava OAuth -->
-				<GlassButton variant="default" size="lg" class="w-full !bg-[#FC4C02]/20 hover:!bg-[#FC4C02]/30">
-					<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-						<path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
-					</svg>
-					S'inscrire avec Strava
-				</GlassButton>
+				<a href="/api/auth/strava" class="block">
+					<GlassButton type="button" variant="default" size="lg" class="w-full !bg-[#FC4C02]/20 hover:!bg-[#FC4C02]/30 border-[#FC4C02]/30">
+						<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+						</svg>
+						S'inscrire avec Strava
+					</GlassButton>
+				</a>
 				
 				<p class="text-center text-sm text-white/50">
 					Déjà un compte ? 
