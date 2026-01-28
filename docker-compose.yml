@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  deter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PUBLIC_SUPABASE_URL=${PUBLIC_SUPABASE_URL}
+        - PUBLIC_SUPABASE_ANON_KEY=${PUBLIC_SUPABASE_ANON_KEY}
+        - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+        - STRAVA_CLIENT_ID=${STRAVA_CLIENT_ID}
+        - STRAVA_CLIENT_SECRET=${STRAVA_CLIENT_SECRET}
+    container_name: deter-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PUBLIC_SUPABASE_URL=${PUBLIC_SUPABASE_URL}
+      - PUBLIC_SUPABASE_ANON_KEY=${PUBLIC_SUPABASE_ANON_KEY}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - STRAVA_CLIENT_ID=${STRAVA_CLIENT_ID}
+      - STRAVA_CLIENT_SECRET=${STRAVA_CLIENT_SECRET}
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  # Optional: Nginx reverse proxy with SSL
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: deter-nginx
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./ssl:/etc/nginx/ssl:ro
+  #   depends_on:
+  #     - deter
